@@ -1,0 +1,45 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif; /* Set default font to Quicksand */
+  height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.center {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+  background-color: #F0EDEB;
+  color: #46454A;
+}
+
+/* Ensure all text elements use the correct font */
+h1, h2, h3, p, span, li, a, div, section {
+  font-family: 'Quicksand', sans-serif; /* Use Quicksand for a rounded look */
+  color: #46454A;
+}
+
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat for headings */
+  color: #4C7572;
+}
+
+/* Example usage for specific elements, if needed */
+.some-class p {
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Additional specific styles can go here */

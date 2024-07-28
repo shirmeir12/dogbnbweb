@@ -1,0 +1,329 @@
+:root {
+  --FONT_H1: Arial, sans-serif; 
+  --TITLE_COLOR_H1: #4C7572;
+  --BACKGROUND_COLOR: #F0EDEB;
+  --TEXT_COLOR_H1: #46454A;
+  --BUTTON_COLOR_H1: #628991;
+  --APPLY_BUTTON_COLOR: #8BBBAA; /* צבע הכפתור החדש */
+}
+
+body {
+  font-family: var(--FONT_H1);
+  direction: ltr;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: var(--BACKGROUND_COLOR);
+  color: var(--TEXT_COLOR_H1);
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+  background-color: var(--BACKGROUND_COLOR);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  align-items: center;
+  position: relative; /* כדי לאפשר למרכיבים להיות ממוקמים בצורה יחסית */
+}
+
+.header {
+  padding: 20px 0;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: var(--TITLE_COLOR_H1);
+  margin: 0;
+}
+
+.header-buttons {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to the left */
+  padding: 20px;
+  gap: 10px;
+  background-color: var(--BACKGROUND_COLOR);
+  border-radius: 8px;
+}
+
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: auto; /* Ensure buttons are not stretched */
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 15px; /* Vertical spacing between rows */
+  column-gap: 10px; /* Horizontal spacing between columns */
+  width: calc(100% - 40px); /* Add padding to the sides */
+  max-width: 1400px; /* Optional: limit the maximum width of the grid */
+  justify-items: center; /* Center the grid items */
+  padding: 0 20px; /* Add padding to the sides */
+}
+
+/* each post in the grid */
+.post {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  text-align: center; /* Center-align text inside the post */
+  padding: 20px; /* Optional: padding inside each post */
+  border: 1px solid #ddd; /* Optional: border around each post */
+  height: 400px;
+  width: 350px; /* Fixed width to ensure proper centering */
+  margin: 10px; /* Margin to create space around posts */
+  border-radius: 8px;
+}
+
+.post img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover; /* Ensure the images maintain their aspect ratio */
+}
+
+.post h2 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.post p {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+button,
+.exit-filters,
+.new-post-form .post-button,
+.new-post-form .close-button,
+.more-info {
+  display: block;
+  padding: 10px 20px;
+  background-color: var(--BUTTON_COLOR_H1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+button:hover,
+.new-post-form .post-button:hover,
+.more-info:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow effect */
+}
+
+.exit-filters:hover,
+.new-post-form .close-button:hover {
+  background: none; /* Remove background on hover */
+  box-shadow: none; /* Remove shadow on hover */
+}
+
+.filter-overlay,
+.add-post-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-container,
+.add-post-form {
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-width: 250px; /* Increase max-width */
+  width: 80%; /* Increase width */
+  position: relative;
+  font-size: 10px;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align all children */
+  gap: 1px;
+  margin-bottom: 20px;
+}
+
+.filter-options label {
+  width: 100%; /* Full width for labels */
+  text-align: center; /* Center align text */
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.filter-options input,
+.filter-options select {
+  width: 100%; /* Full width for inputs and selects */
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.apply-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.apply-button,
+.clear-button {
+  flex: 1;
+  font-size: 14px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  text-align: center;
+}
+
+.apply-button {
+  background-color: #91cab6;
+  color: white;
+  margin-right: 10px;
+}
+
+.apply-button:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.clear-button {
+  background-color: #577a6d;
+  color: white;
+}
+
+.clear-button:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}
+.exit-filters {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px; /* Make the button smaller */
+  color: black; /* Change color to black */
+  border: none;
+  background: none; /* Remove background */
+  cursor: pointer;
+  font-size: 20px; /* Increase font size */
+  width: auto; /* Ensure button is not stretched */
+}
+
+.new-post-form {
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 80%; /* Increase width */
+  max-width: 600px; /* Increase max-width */
+  margin: 20px auto;
+  position: relative;
+}
+
+.new-post-form label {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.new-post-form input {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.new-post-form .post-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: var(--APPLY_BUTTON_COLOR);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.new-post-form .post-button:hover {
+  background-color: #91cab6; /* גוון מעט כהה יותר לצבע הכפתור בעת ריחוף */
+}
+
+.new-post-form .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px; /* Make the button smaller */
+  color: black; /* Change color to black */
+  border: none;
+  background: none; /* Remove background */
+  cursor: pointer;
+  font-size: 20px; /* Increase font size */
+  width: auto; /* Ensure button is not stretched */
+}
+
+.more-info {
+  margin-top: auto;
+  padding: 7px 15px;
+  background-color: var(--BUTTON_COLOR_H1);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.more-info:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow effect */
+}
+
+.delete-post {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background-color: #a85757;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 5px 10px;
+  z-index: 1;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.delete-post:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}

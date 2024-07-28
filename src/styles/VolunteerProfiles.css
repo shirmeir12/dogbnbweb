@@ -1,0 +1,169 @@
+:root {
+  --FONT_H1: Arial, sans-serif; 
+  --TITLE_COLOR_H1: #4C7572;
+  --BACKGROUND_COLOR: #F0EDEB;
+  --TEXT_COLOR_H1: #46454A;
+  --BUTTON_COLOR_H1: #605F85;
+  --DARKER_TITLE_COLOR: #2C5C4A; 
+  --DARKER_TEXT_COLOR: #363636; 
+  --REVIEW_BG_COLOR: #f5f5f5; 
+}
+
+body {
+  font-family: var(--FONT_H1);
+  direction: ltr;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: var(--BACKGROUND_COLOR);
+  color: var(--TEXT_COLOR_H1);
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px; 
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-image img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+  padding: 40px; 
+}
+
+.basic-info {
+  text-align: left;
+}
+
+h1 {
+  font-family: var(--FONT_H1);
+  color: var(--DARKER_TITLE_COLOR); /* צבע כהה יותר עבור Meet John */
+}
+
+h2 {
+  font-family: var(--FONT_H1);
+  color: var(--TITLE_COLOR_H1); 
+}
+
+.basic-info p {
+  color: var(--DARKER_TEXT_COLOR); 
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: var(--BUTTON_COLOR_H1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: var(--BUTTON_COLOR_H1);
+}
+
+.profile-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-left: 50px; 
+  padding-right: 50px; 
+ 
+}
+
+.profile-info .column {
+  width: 48%;
+}
+
+.profile-info .detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.profile-info .detail-label {
+  flex: 1;
+  text-align: left;
+  font-weight: bold;
+}
+
+.profile-info .detail-value {
+  flex: 1;
+  text-align: right;
+}
+
+.description {
+  text-align: center; /* מרכז את הטקסט של A Little About Me */
+  margin-top: 20px;
+
+}
+
+.description p {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.reviews {
+  text-align: center;
+  margin-top: 50px;
+  padding-left: 50px; 
+  padding-right: 50px; 
+ 
+}
+
+.reviews .reviews-container {
+  max-height: 400px; 
+  overflow-y: auto; 
+  padding-right: 20px; 
+}
+
+.reviews-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.review {
+  background-color: var(--REVIEW_BG_COLOR); 
+  padding: 10px;
+  border-radius: 5px;
+  width: 48%; 
+  box-sizing: border-box;
+  text-align: left; 
+}
+
+.review strong {
+  font-size: 14px; 
+}
+
+.review .date-location {
+  font-size: 12px; 
+  color: #888; 
+  display: block;
+  margin-top: 5px;
+}
+
+.review p {
+  font-size: 13px; 
+  margin-top: 5px;
+}
