@@ -852,8 +852,8 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
         galleryImages, 
         onImageUpload,
         isLoading 
-        
       }) => {
+        const { user } = useContext(UserContext);
         const [isEditing, setIsEditing] = useState(false);
         const [formData, setFormData] = useState(profile);
       
@@ -874,7 +874,6 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
           });
         };
       
-        // Adding profile image upload functionality
         const handleProfileImageUpload = async (e) => {
           const file = e.target.files[0];
           if (file) {
@@ -885,35 +884,31 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
             });
       
             const storage = getStorage();
-            const storageRef = ref(storage, `profile_pics/${profile.uid}/${file.name}`);
+            const storageRef = ref(storage, `profile_pics/${user.firebaseUser.uid}`);
       
             try {
               await uploadBytes(storageRef, file);
               const profilePicURL = await getDownloadURL(storageRef);
       
-              await updateDoc(doc(DB, 'users', profile.uid), {
-                profilePic: profilePicURL
-              });
-      
-              setFormData({
+              setFormData(prevData => ({
                 ...formData,
                 profilePic: profilePicURL,
-              });
+              }));
       
               URL.revokeObjectURL(localURL);
             } catch (error) {
               console.error("Error uploading image:", error);
-              setFormData({
-                ...formData,
+              setFormData(prevData => ({
+                ...prevData,
                 profilePic: profile.profilePic,
-              });
+              }));
             }
           }
         };
+        
       
-        // Removing extra commas from the address
         const formattedAddress = formData.address?.replace(/,+/g, ',').replace(/^,|,$/g, '').trim();
-
+      
         return (
           <Container>
             <GlobalStyle />
@@ -962,6 +957,7 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
           </Container>
         );
       };
+      
       
       const MyProfile = () => {
         const { user, updateUserDetails } = useContext(UserContext);
