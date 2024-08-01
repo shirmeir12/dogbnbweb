@@ -8,6 +8,7 @@ import dog1 from '../images/dog1.jpg';
 import dog2 from '../images/dog2.jpg';
 import pawPrint from '../images/pawprint5.svg';
 import { getAuth } from 'firebase/auth'; // Ensure this import is present
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -306,13 +307,28 @@ const DogProfiles = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        console.log("Fetching profile for UID:", uid);// delete at some point 
+        console.log("Fetching profile for UID:", uid); // delete at some point 
         const docRef = doc(DB, 'users', uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
           console.log("Fetched profile data:", data);
           setProfile(data);
+  
+          // Fetch post data
+          const postsRef = collection(DB, 'posts');
+          const q = query(postsRef, where("postOwnerUid", "==", uid));
+          const querySnapshot = await getDocs(q);
+          let datesForBBsitting = '';
+          querySnapshot.forEach((doc) => {
+            const postData = doc.data();
+            console.log("Fetched post data:", postData);
+            datesForBBsitting += `${postData.startDate} to ${postData.endDate}\n`;
+          });
+          setProfile(prevProfile => ({
+            ...prevProfile,
+            datesForBBsitting: datesForBBsitting.trim()
+          }));
         } else {
           console.log("No such document!");
           setError("No such document!");
@@ -324,7 +340,7 @@ const DogProfiles = () => {
         setLoading(false);
       }
     };
-
+  
     fetchProfile();
   }, [uid]);
 
