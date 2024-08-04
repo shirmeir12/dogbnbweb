@@ -439,10 +439,10 @@ const Gallery = ({ images, onUpload }) => {
     );
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      onUpload(file);
+      await onUpload(file);
     }
   };
 
@@ -852,8 +852,8 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
         galleryImages, 
         onImageUpload,
         isLoading 
+        
       }) => {
-        const { user } = useContext(UserContext);
         const [isEditing, setIsEditing] = useState(false);
         const [formData, setFormData] = useState(profile);
       
@@ -874,6 +874,7 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
           });
         };
       
+        // Adding profile image upload functionality
         const handleProfileImageUpload = async (e) => {
           const file = e.target.files[0];
           if (file) {
@@ -884,31 +885,35 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
             });
       
             const storage = getStorage();
-            const storageRef = ref(storage, `profile_pics/${user.firebaseUser.uid}`);
+            const storageRef = ref(storage, `profile_pics/${profile.uid}/${file.name}`);
       
             try {
               await uploadBytes(storageRef, file);
               const profilePicURL = await getDownloadURL(storageRef);
       
-              setFormData(prevData => ({
+              await updateDoc(doc(DB, 'users', profile.uid), {
+                profilePic: profilePicURL
+              });
+      
+              setFormData({
                 ...formData,
                 profilePic: profilePicURL,
-              }));
+              });
       
               URL.revokeObjectURL(localURL);
             } catch (error) {
               console.error("Error uploading image:", error);
-              setFormData(prevData => ({
-                ...prevData,
+              setFormData({
+                ...formData,
                 profilePic: profile.profilePic,
-              }));
+              });
             }
           }
         };
-        
       
+        // Removing extra commas from the address
         const formattedAddress = formData.address?.replace(/,+/g, ',').replace(/^,|,$/g, '').trim();
-      
+
         return (
           <Container>
             <GlobalStyle />
@@ -954,10 +959,10 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
               </Section>
             </ProfileSectionWrapper>
             <Gallery images={galleryImages} onUpload={onImageUpload} />
+
           </Container>
         );
       };
-      
       
       const MyProfile = () => {
         const { user, updateUserDetails } = useContext(UserContext);
@@ -973,28 +978,31 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
               setIsLoading(true);
               const docRef = doc(DB, 'users', user.firebaseUser.uid);
               const docSnap = await getDoc(docRef);
-      
+        
               if (docSnap.exists()) {
                 const data = docSnap.data();
                 setRequests(data.connectionRequests || []);
                 setSitters(data.sitters || []);
-      
+                setGalleryImages(data.galleryImages || []); // Initialize with existing gallery images
+        
                 if (!checkUserDetails(data)) {
                   setShowDetailsPopup(true);
                 }
               } else {
                 setRequests([]);
                 setSitters([]);
+                setGalleryImages([]);
               }
             } catch (error) {
               console.error("Error fetching user data:", error);
               setRequests([]);
               setSitters([]);
+              setGalleryImages([]);
             } finally {
               setIsLoading(false);
             }
           };
-      
+        
           fetchUserData();
         }, [user.firebaseUser.uid]);
       
@@ -1103,37 +1111,34 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
         };
       
         const handleImageUpload = async (file) => {
-          const reader = new FileReader();
-          reader.onloadend = async () => {
-            const newImage = reader.result;
-      
-            // עדכון המצב עם התמונה החדשה
-            setGalleryImages((prevImages) => {
-              console.log("Previous Images: ", prevImages);
-              console.log("New Image: ", newImage);
-              return [...prevImages, newImage];
+          try {
+            console.log("Starting image upload...");
+            const storage = getStorage();
+            const storageRef = ref(storage, `gallery/${user.firebaseUser.uid}/${file.name}`);
+            
+            console.log("Uploading file to Firebase Storage...");
+            await uploadBytes(storageRef, file);
+            
+            console.log("Getting download URL...");
+            const downloadURL = await getDownloadURL(storageRef);
+        
+            console.log("Updating local state...");
+            setGalleryImages(prevImages => [...prevImages, downloadURL]);
+        
+            console.log("Updating Firestore document...");
+            const userDocRef = doc(DB, 'users', user.firebaseUser.uid);
+            await updateDoc(userDocRef, {
+              galleryImages: arrayUnion(downloadURL)
             });
-      
-            // העלאת התמונה לשרת
-            try {
-              const storage = getStorage();
-              const storageRef = ref(storage, `gallery/${user.firebaseUser.uid}/${file.name}`);
-              await uploadBytes(storageRef, file);
-              const downloadURL = await getDownloadURL(storageRef);
-      
-              const userDocRef = doc(DB, 'users', user.firebaseUser.uid);
-              await updateDoc(userDocRef, {
-                galleryImages: arrayUnion(downloadURL)
-              });
-      
-              console.log("Image uploaded and state updated successfully");
-            } catch (error) {
-              console.error("Error uploading image:", error);
-            }
-          };
-          reader.readAsDataURL(file);
+        
+            console.log("Image uploaded and saved successfully");
+          } catch (error) {
+            console.error("Error uploading image:", error.message);
+            console.error("Error code:", error.code);
+            console.error("Full error:", error);
+          }
         };
-      
+        
         return (
           <div>
             {showDetailsPopup && (

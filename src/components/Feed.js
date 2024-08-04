@@ -6,6 +6,7 @@ import { DB } from './Config';
 import { UserContext } from '../App';
 import '../styles/Feed.css';
 
+
 const Feed = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
