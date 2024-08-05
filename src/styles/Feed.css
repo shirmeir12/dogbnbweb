@@ -254,6 +254,7 @@ button:hover,
   display: block;
   margin-bottom: 10px;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .new-post-form input {
@@ -326,4 +327,19 @@ button:hover,
 
 .delete-post:hover {
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.add-post-container {
+  max-width: 300px;
+  padding: 10px;
+}
+
+.add-post-container label {
+  font-weight: bold;
+}
+
+.add-post-container input[type="date"] {
+  width: 100%;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }

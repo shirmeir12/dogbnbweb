@@ -6,7 +6,6 @@ import { DB } from './Config';
 import { UserContext } from '../App';
 import '../styles/Feed.css';
 
-
 const Feed = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -34,7 +33,12 @@ const Feed = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(DB, 'posts'), async (snapshot) => {
       const updatedPosts = await Promise.all(snapshot.docs.map(async (post) => fillOwnerDetails(post)));
-      setPosts(updatedPosts);
+      const sortedPosts = updatedPosts.sort((a, b) => {
+        const aStartDate = new Date(a.startDate.split('/').reverse().join('-'));
+        const bStartDate = new Date(b.startDate.split('/').reverse().join('-'));
+        return aStartDate - bStartDate;
+      });
+      setPosts(sortedPosts);
     });
 
     return () => unsubscribe();
@@ -110,6 +114,16 @@ const Feed = () => {
     return postOwnerUid === user.firebaseUser.uid;
   };
 
+  const handleMoreInfoClick = (post) => {
+    if (post.ownerUid === user.firebaseUser.uid) {
+      navigate('/my-profile');
+    } else {
+      navigate(`/dog-profile/${post.ownerUid}`, {
+        state: { startDate: post.startDate, endDate: post.endDate },
+      });
+    }
+  };
+
   const filteredPosts = posts.filter(post => {
     const durationDays = calculateDurationInDays(post.startDate, post.endDate);
     return (
@@ -125,7 +139,10 @@ const Feed = () => {
       (filterFriendlyToChildren === '' || post.friendlyToChildren.toLowerCase() === filterFriendlyToChildren.toLowerCase() || post.friendlyToChildren === '' ||
         (filterFriendlyToChildren === 'yes' && post.friendlyToChildren === '') || (filterFriendlyToChildren === 'no' && post.friendlyToChildren === ''))
     );
-  }).sort((a, b) => {
+  });
+
+  // Sort filtered posts by startDate
+  filteredPosts.sort((a, b) => {
     const aStartDate = new Date(a.startDate.split('/').reverse().join('-'));
     const bStartDate = new Date(b.startDate.split('/').reverse().join('-'));
     return aStartDate - bStartDate;
@@ -174,17 +191,15 @@ const Feed = () => {
     <div className="container">
       <div className="header-buttons">
         <button onClick={toggleFilter}><FaFilter /> Filter</button>
-        {user.details.registrationType !== 'volunteer' && (
-          <button onClick={toggleAddPost}><FaPlus /> Add Post</button>
-        )}
+        <button onClick={toggleAddPost}><FaPlus /> Add Post</button>
       </div>
 
       {showFilter && (
         <div className="filter-overlay">
           <div className="filter-container" style={{ maxWidth: '300px', padding: '10px' }}>
-          <button className="exit-filters" onClick={toggleFilter}>X</button>
+            <button className="exit-filters" onClick={toggleFilter}>X</button>
             <div className="filter-options">
-              <label htmlFor="city">City</label>
+            <label htmlFor="city">City</label>
               <input
                 type="text"
                 id="city"
@@ -277,7 +292,7 @@ const Feed = () => {
 
       {showAddPost && (
         <div className="add-post-overlay">
-          <div className="new-post-form">
+          <div className="new-post-form add-post-container">
             <button className="close-button" onClick={toggleAddPost}>X</button>
             <p>Make sure you complete all details about your dog in "My Profile" for the best outcomes to your post</p>
             <form onSubmit={addPost}>
@@ -311,9 +326,7 @@ const Feed = () => {
             <button 
               type="button" 
               className="more-info" 
-              onClick={() => navigate(`/dog-profile/${post.ownerUid}`, { 
-                state: { startDate: post.startDate, endDate: post.endDate } 
-              })}
+              onClick={() => handleMoreInfoClick(post)}
             >
               more info
             </button>

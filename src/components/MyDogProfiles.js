@@ -230,6 +230,7 @@ const ActionButtons = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 10px; /* רווח בין הכפתורים אם רצוי */
+  align-items: center; /* Center align items vertically */
 `;
 
 const Button = styled.button`
@@ -240,12 +241,18 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out;
-  min-width: 90px; /* מגדיר רוחב מינימלי אחיד לכפתורים */
-  height: 40px;
+  min-width: 20px; /* מגדיר רוחב מינימלי אחיד לכפתורים */
+  height: 20px; /* מגדיר גובה אחיד לכפתור המחק */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-top: auto;
+  margin-bottom: auto;
 
   &:hover {
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
-    background-color: ${props => props.primary ? '#4C7572' : '#B05D5D'};
+    background-color: ${props => props.primary ? '#4C7572' : '#A04B4B'};
   }
 `;
 
@@ -393,7 +400,6 @@ const RadioGroup = styled.div`
   gap: 0.5px;
 `;
 
-
 const PopupContainer = styled.div`
   position: fixed;
   top: 50%;
@@ -414,7 +420,6 @@ const PopupMessage = styled.div`
   font-size: 1.2rem !important; /* Ensures the font size is applied */
   margin: 10px !important; /* Ensures the margin is applied */
 `;
-
 
 const Gallery = ({ images, onUpload }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -742,7 +747,6 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
         );
       };
       
-      
       const DogSitters = ({ sitters, onDelete, onAddReview }) => {
         const navigate = useNavigate();
         const [reviewIndex, setReviewIndex] = useState(null);
@@ -792,8 +796,8 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                     <PhoneButton href={`https://wa.me/${formatPhoneNumber(sitter.mobile)}`} target="_blank">
                       <FaWhatsapp />
                     </PhoneButton>
-                    <Button style={{ width: '80px' }} onClick={() => onDelete(index)}>Delete</Button>
-                    <Button primary style={{ width: '110px' }} onClick={() => handleAddReview(index)}>Add Review</Button>
+                    <Button primary style={{ width: '110px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => handleAddReview(index)}>Add Review</Button>
+                    <Button style={{ width: '20px', height: '20px', minWidth: '20px', backgroundColor: '#B05D5D', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }} onClick={() => onDelete(index)}>X</Button>
                   </ActionButtons>
                 </RequestItem>
                 {reviewIndex === index && (
@@ -802,14 +806,14 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                       onClick={handleCloseReview}
                       style={{
                         position: 'absolute',
-                        top: '-15px',
+                        top: '-10px',
                         left: '10px',
                         background: 'none',
                         border: 'none',
                         fontSize: '1.2rem',
                         cursor: 'pointer',
                         color: '#B05D5D',
-                        padding: '5',
+                        padding: '0',
                       }}
                     >
                       ×
@@ -818,7 +822,7 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                       rows="4"
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
-                      style={{ width: 'calc(100% - 20px)', margin: '10px 10px 0 10px' }}
+                      style={{ width: 'calc(100% - 20px)', margin: '15px 10px 0 10px' }}
                     />
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', marginLeft: '10px', marginRight: '10px' }}>
                       <Button
@@ -836,8 +840,6 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
           </Card>
         );
       };
-      
-      
       
       
       const DogProfileCard = ({ 
