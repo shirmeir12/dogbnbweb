@@ -17,8 +17,8 @@ import galleryImage6 from '../images/dog6.jpg';
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --TITLE_FONT: 'Montserrat', sans-serif; /* Change to Montserrat */
-    --TEXT_FONT: 'Quicksand', sans-serif; /* Change to Quicksand */
+    --TITLE_FONT: 'Arial', sans-serif;
+    --TEXT_FONT: Arial, sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;
@@ -61,34 +61,9 @@ const AboutContent = styled.div`
     line-height: 1.5;
   }
 
-  h1, h2 {
+  h1 {
     color: var(--TITLE_COLOR_H1);
     font-family: var(--TITLE_FONT);
-  }
-`;
-
-const AboutBox = styled.div`
-  background-color: var(--REVIEW_BG);
-  padding: 20px;
-  margin: 40px auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px var(--REVIEW_SHADOW);
-  max-width: 1200px;
-  text-align: left;
-
-  h1 {
-    font-size: 2.3em; /* Make the title bigger */
-    text-shadow: 0 0 10px rgba(76, 117, 114, 0.8); /* Add a glow effect */
-  }
-
-  h2 {
-    font-size: 1.5em;
-  }
-
-  p {
-    margin: 10px 0;
-    line-height: 1.5;
-    font-family: var(--TEXT_FONT);
   }
 `;
 
@@ -189,12 +164,12 @@ const GallerySection = styled.div`
   }
 `;
 
-const MainAboutComponent = () => {
+const main_about = () => {
   return (
     <MainAbout>
       <GlobalStyle />
-      <Section $bgColor="var(--SECTION_BG_1)">
-        <AboutBox>
+      <Section bgColor="var(--SECTION_BG_1)">
+        <AboutContent>
           <h1>About DogBNB</h1>
           <p>
             Welcome to DogBNB, a platform supporting Israel’s reserved duty soldiers ("miluim") during challenging times.
@@ -206,9 +181,9 @@ const MainAboutComponent = () => {
             them to focus on their duties, knowing their furry friends are safe and cared for.
           </p>
           <h2>Join us making a difference, one dog at a time!</h2>
-        </AboutBox>
+        </AboutContent>
       </Section>
-      <Section $bgColor="var(--SECTION_BG_2)">
+      <Section bgColor="var(--SECTION_BG_2)">
         <ReviewsSection>
           <Review>
             <img src={dor} alt="Dor, Golani unit" />
@@ -232,19 +207,19 @@ const MainAboutComponent = () => {
             <img src={yossi} alt="Placeholder" />
             <h3>Yossi, Nahal Brigade</h3>
             <p>
-              “DogBNB was a lifesaver! My dog, Luna, got the best care while I was on duty. Couldn't have asked for a better service. Luna felt safe and pleased, and I had a clear mind in the Miluim. Thank you DogBNB for this special platform, its great! Highly recommend!”
+              “DogBNB was a lifesaver! My dog, Luna, got the best care while I was on duty. Couldn't have asked for a better service. Highly recommend!”
             </p>
           </Review>
           <Review>
             <img src={yael} alt="Placeholder" />
             <h3>Yael, Volunteer</h3>
             <p>
-              “I love helping out the soldiers by taking care of their pets while they are protecting us in those scary times. DogBNB makes it so easy to connect and ensure the pets are happy and well-cared for. In times of war, I feel good to do anything that helps our Miluim!”
+              “I love helping out the soldiers by taking care of their pets. DogBNB makes it so easy to connect and ensure the pets are happy and well-cared for.”
             </p>
           </Review>
         </ReviewsSection>
       </Section>
-      <HowItWorksSection $bgColor="var(--SECTION_BG_3)">
+      <HowItWorksSection bgColor="var(--SECTION_BG_3)">
         <h2>Why it works</h2>
         <HowItWorks>
           <Feature>
@@ -264,7 +239,7 @@ const MainAboutComponent = () => {
           </Feature>
         </HowItWorks>
       </HowItWorksSection>
-      <Section $bgColor="var(--SECTION_BG_4)">
+      <Section bgColor="var(--SECTION_BG_4)">
         <GallerySection>
           <img src={galleryImage1} alt="Gallery" />
           <img src={galleryImage2} alt="Gallery" />
@@ -274,7 +249,7 @@ const MainAboutComponent = () => {
           <img src={galleryImage6} alt="Gallery" />
         </GallerySection>
       </Section>
-      <Section $bgColor="var(--SECTION_BG_5)">
+      <Section bgColor="var(--SECTION_BG_5)">
         <RatingSection>
           <CustomRating />
         </RatingSection>
@@ -283,4 +258,4 @@ const MainAboutComponent = () => {
   );
 };
 
-export default MainAboutComponent;
+export default main_about;
