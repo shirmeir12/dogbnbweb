@@ -885,23 +885,31 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
               ...formData,
               profilePic: localURL,
             });
-      
+        
             const storage = getStorage();
-            const storageRef = ref(storage, `profile_pics/${profile.uid}/${file.name}`);
-      
+            const auth = getAuth();
+            const user = auth.currentUser;
+        
+            if (!user) {
+              console.error("User is not authenticated");
+              return;
+            }
+        
+            const storageRef = ref(storage, `profile_pics/${user.uid}/${file.name}`);
+        
             try {
               await uploadBytes(storageRef, file);
               const profilePicURL = await getDownloadURL(storageRef);
-      
-              await updateDoc(doc(DB, 'users', profile.uid), {
+        
+              await updateDoc(doc(DB, 'users', user.uid), {
                 profilePic: profilePicURL
               });
-      
+        
               setFormData({
                 ...formData,
                 profilePic: profilePicURL,
               });
-      
+        
               URL.revokeObjectURL(localURL);
             } catch (error) {
               console.error("Error uploading image:", error);
