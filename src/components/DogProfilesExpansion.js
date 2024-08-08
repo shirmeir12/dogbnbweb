@@ -307,13 +307,17 @@ const DogProfiles = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        console.log("Fetching profile for UID:", uid); // delete at some point 
+        console.log("Fetching profile for UID:", uid);
         const docRef = doc(DB, 'users', uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
           console.log("Fetched profile data:", data);
-          setProfile(data);
+          setProfile(prevProfile => ({
+            ...prevProfile,
+            ...data,
+            galleryImages: data.galleryImages || [] // Ensure galleryImages is included
+          }));
   
           // Fetch post data
           const postsRef = collection(DB, 'posts');
@@ -428,7 +432,7 @@ const DogProfiles = () => {
           <PersonalDetails profile={profile} />
         </Section>
         <Section>
-          <Gallery images={[dog1, dog2]} />
+          <Gallery images={profile.galleryImages} /> 
         </Section>
       </ProfileSectionWrapper>
       {showMessage && (
@@ -472,17 +476,21 @@ const Gallery = ({ images }) => {
           <SubTitle>Gallery</SubTitle>
         </TitleWithIcon>
       </TitleSection>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {images.map((image, index) => (
-          <GalleryImage
-            key={index}
-            src={image}
-            alt={`gallery-${index}`}
-            onClick={() => openModal(index)}
-          />
-        ))}
-      </div>
-      {selectedImageIndex !== null && (
+      {images && images.length > 0 ? (
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {images.map((image, index) => (
+            <GalleryImage
+              key={index}
+              src={image}
+              alt={`gallery-${index}`}
+              onClick={() => openModal(index)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>No images available</p>
+      )}
+      {selectedImageIndex !== null && images && images.length > 0 && (
         <ModalOverlay onClick={closeModal}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
             <ArrowButton style={{ left: 0 }} onClick={showPrevImage}>
@@ -499,7 +507,6 @@ const Gallery = ({ images }) => {
     </GalleryCard>
   );
 };
-
 const PersonalDetails = ({ profile }) => (
   <Card>
     <TitleSection>
