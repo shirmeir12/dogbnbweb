@@ -787,7 +787,7 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
             {sitters.map((sitter, index) => (
               <div key={index} style={{ marginBottom: '20px' }}>
                 <RequestItem>
-                  <Avatar src={sitter.profilePic} alt={sitter.name} onClick={() => handleNameClick(sitter.id)} />
+                  <Avatar src={sitter.profilePic} alt={sitter.name} onClick={() => handleNameClick(sitter.userId)} />
                   <Info>
                     <Name onClick={() => handleNameClick(sitter.userId)}>{sitter.name}</Name>
                     <Date>{sitter.date}</Date>
