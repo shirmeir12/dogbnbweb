@@ -191,7 +191,9 @@ const Feed = () => {
     <div className="container">
       <div className="header-buttons">
         <button onClick={toggleFilter}><FaFilter /> Filter</button>
-        <button onClick={toggleAddPost}><FaPlus /> Add Post</button>
+        {user.details.registrationType !== 'volunteer' && (
+          <button onClick={toggleAddPost}><FaPlus /> Add Post</button>
+        )}
       </div>
 
       {showFilter && (
