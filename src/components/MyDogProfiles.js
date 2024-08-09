@@ -993,7 +993,13 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                 const data = docSnap.data();
                 setRequests(data.connectionRequests || []);
                 setSitters(data.sitters || []);
-                setGalleryImages(data.galleryImages || []); // Initialize with existing gallery images
+                
+                // Ensure profile picture is always included in gallery images
+                const galleryImgs = data.galleryImages || [];
+                if (data.profilePic && !galleryImgs.includes(data.profilePic)) {
+                  galleryImgs.unshift(data.profilePic);
+                }
+                setGalleryImages(galleryImgs);
         
                 if (!checkUserDetails(data)) {
                   setShowDetailsPopup(true);
@@ -1001,20 +1007,20 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
               } else {
                 setRequests([]);
                 setSitters([]);
-                setGalleryImages([]);
+                setGalleryImages([user.details.profilePic]); // Fallback to profile pic if no data
               }
             } catch (error) {
               console.error("Error fetching user data:", error);
               setRequests([]);
               setSitters([]);
-              setGalleryImages([]);
+              setGalleryImages([user.details.profilePic]); // Fallback to profile pic on error
             } finally {
               setIsLoading(false);
             }
           };
         
           fetchUserData();
-        }, [user.firebaseUser.uid]);
+        }, [user.firebaseUser.uid, user.details.profilePic]);
       
         const checkUserDetails = (details) => {
           const requiredFields = [
@@ -1133,7 +1139,11 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
             const downloadURL = await getDownloadURL(storageRef);
         
             console.log("Updating local state...");
-            setGalleryImages(prevImages => [...prevImages, downloadURL]);
+            setGalleryImages(prevImages => {
+              // Ensure profile picture is always first in the array
+              const newImages = prevImages.filter(img => img !== user.details.profilePic);
+              return [user.details.profilePic, ...newImages, downloadURL];
+            });
         
             console.log("Updating Firestore document...");
             const userDocRef = doc(DB, 'users', user.firebaseUser.uid);
