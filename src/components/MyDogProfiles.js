@@ -737,8 +737,8 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                     <Date>{request.date}</Date>
                   </Info>
                   <ActionButtons>
-                    <Button onClick={() => onDelete(index)}>Delete</Button>
-                    <Button primary onClick={() => onAccept(index)}>Accept</Button>
+                    <Button primary style={{ width: '70px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => onAccept(index)}>Accept</Button>
+                    <Button style={{ width: '70px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => onDelete(index)}>Delete</Button>
                   </ActionButtons>
                 </RequestItem>
               ))
@@ -796,8 +796,8 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                     <PhoneButton href={`https://wa.me/${formatPhoneNumber(sitter.mobile)}`} target="_blank">
                       <FaWhatsapp />
                     </PhoneButton>
-                    <Button primary style={{ width: '110px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => handleAddReview(index)}>Add Review</Button>
-                    <Button style={{ width: '20px', height: '20px', minWidth: '20px', backgroundColor: '#B05D5D', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }} onClick={() => onDelete(index)}>X</Button>
+                    <Button primary style={{ width: '100px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => handleAddReview(index)}>Add Review</Button>
+                    <Button style={{ width: '28px', height: '28px', minWidth: '20px', backgroundColor: '#B05D5D', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }} onClick={() => onDelete(index)}>X</Button>
                   </ActionButtons>
                 </RequestItem>
                 {reviewIndex === index && (
