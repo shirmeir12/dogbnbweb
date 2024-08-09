@@ -1138,18 +1138,29 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
             console.log("Getting download URL...");
             const downloadURL = await getDownloadURL(storageRef);
         
-            console.log("Updating local state...");
-            setGalleryImages(prevImages => {
-              // Ensure profile picture is always first in the array
-              const newImages = prevImages.filter(img => img !== user.details.profilePic);
-              return [user.details.profilePic, ...newImages, downloadURL];
+            console.log("Updating local state and Firestore document...");
+            const userDocRef = doc(DB, 'users', user.firebaseUser.uid);
+            
+            // Get the current user data
+            const userDoc = await getDoc(userDocRef);
+            const userData = userDoc.data();
+            
+            // Update the gallery images array
+            let updatedGalleryImages = userData.galleryImages || [];
+            if (!updatedGalleryImages.includes(userData.profilePic)) {
+              updatedGalleryImages.unshift(userData.profilePic);
+            }
+            if (!updatedGalleryImages.includes(downloadURL)) {
+              updatedGalleryImages.push(downloadURL);
+            }
+        
+            // Update Firestore
+            await updateDoc(userDocRef, {
+              galleryImages: updatedGalleryImages
             });
         
-            console.log("Updating Firestore document...");
-            const userDocRef = doc(DB, 'users', user.firebaseUser.uid);
-            await updateDoc(userDocRef, {
-              galleryImages: arrayUnion(downloadURL)
-            });
+            // Update local state
+            setGalleryImages(updatedGalleryImages);
         
             console.log("Image uploaded and saved successfully");
           } catch (error) {
