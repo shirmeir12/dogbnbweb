@@ -295,7 +295,7 @@ const VolProfile = () => {
             </TitleSection>
             {Array.isArray(profile.reviews) && profile.reviews.map((review, index) => (
               <ReviewCard key={index}>
-                <DetailLabel><strong>{review.reviewer}:</strong></DetailLabel>
+                <DetailLabel><strong>{review.reviewerName}:</strong></DetailLabel>
                 <DetailValue>{review.date}, {review.location}</DetailValue>
                 <Text>{review.text}</Text>
               </ReviewCard>
