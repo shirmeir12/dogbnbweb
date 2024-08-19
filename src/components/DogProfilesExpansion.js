@@ -13,7 +13,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 const GlobalStyle = createGlobalStyle`
   :root {
     --TITLE_FONT: 'Source Serif Pro', serif;
-    --TEXT_FONT: Arial, sans-serif;
+    --TEXT_FONT: 'Quicksand', sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;
@@ -36,6 +36,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 `;
+
+
 
 const Container = styled.div`
   width: 90%;
@@ -83,7 +85,7 @@ const BasicInfo = styled.div`
 `;
 
 const VolunteerName = styled.h2`
-  font-family: arial;
+  font-family: 'Quicksand', sans-serif;
   font-size: 4rem;
   margin: 5px 0;
   color: #555;
@@ -97,14 +99,15 @@ const SubTitle = styled.h2`
 `;
 
 const Text = styled.p`
-  font-family: var(--TEXT_FONT);
-  font-size: 1.2rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.2rem; /* הגדלת הפונט */
   margin: 5px 0;
   color: var(--TEXT_COLOR_H1);
 `;
 
 const BoldTextInline = styled.span`
   font-weight: bold;
+  font-size: 1rem; /* הגדלת הפונט */
 `;
 
 const Card = styled.div`
@@ -165,6 +168,7 @@ const GalleryCard = styled(Card)`
 
 const ContactButton = styled.button`
   background-color: var(--BUTTON_COLOR_H1);
+  font-family: var(--TEXT_FONT);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -406,10 +410,6 @@ const DogProfiles = () => {
     </PopupContainer>
   )}
   
-  
-  
-  
-
 
   return (
     <Container>
@@ -569,13 +569,13 @@ const PersonalDetails = ({ profile }) => (
       <DetailLabel><strong>A Little About Me</strong></DetailLabel>
     </DetailRow>
     <Card>
-      <Text>{profile.dogDetails || ''}</Text>
+      {profile.dogDetails || ''}
     </Card>
     <DetailRow>
       <DetailLabel><strong>Care Instructions</strong></DetailLabel>
     </DetailRow>
     <Card>
-      <Text>{profile.careInstructions || ''}</Text>
+      {profile.careInstructions || ''}
     </Card>
   </Card>
 );

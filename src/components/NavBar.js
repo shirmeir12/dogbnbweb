@@ -7,7 +7,13 @@ import { logOut } from '../components/Config'; // Adjust this import path if nec
 const NavbarContainer = styled.nav`
   background-color: #96C3BB;
   padding: 1rem;
+  position: fixed; /* Makes the navbar fixed at the top */
+  top: 0; /* Ensures it's at the top */
+  width: 100%; /* Ensures it spans the full width */
+  z-index: 1000; /* Ensures it stays on top of other elements */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for better separation */
 `;
+
 
 const NavbarList = styled.ul`
   list-style: none;

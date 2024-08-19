@@ -1,14 +1,14 @@
 :root {
-  --FONT_H1: Arial, sans-serif; 
+  --FONT_MAIN: 'Quicksand', sans-serif; 
   --TITLE_COLOR_H1: #4C7572;
   --BACKGROUND_COLOR: #F0EDEB;
   --TEXT_COLOR_H1: #46454A;
   --BUTTON_COLOR_H1: #628991;
-  --APPLY_BUTTON_COLOR: #8BBBAA; /* צבע הכפתור החדש */
+  --APPLY_BUTTON_COLOR: #8BBBAA;
 }
 
 body {
-  font-family: var(--FONT_H1);
+  font-family: var(--FONT_MAIN);
   direction: ltr;
   text-align: center;
   margin: 0;
@@ -23,14 +23,15 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  margin: auto;
+  margin:0 auto;
   background-color: var(--BACKGROUND_COLOR);
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin-bottom: 20px;
+  box-sizing: border-box;
   align-items: center;
-  position: relative; /* כדי לאפשר למרכיבים להיות ממוקמים בצורה יחסית */
+  position: relative;
 }
 
 .header {
@@ -42,6 +43,7 @@ body {
 }
 
 .header h1 {
+  font-family: var(--FONT_MAIN);
   font-size: 24px;
   color: var(--TITLE_COLOR_H1);
   margin: 0;
@@ -57,6 +59,7 @@ body {
 }
 
 .header-buttons button {
+  font-family: var(--FONT_MAIN);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -67,27 +70,29 @@ body {
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 15px; /* Vertical spacing between rows */
-  column-gap: 10px; /* Horizontal spacing between columns */
-  width: calc(100% - 40px); /* Add padding to the sides */
-  max-width: 1400px; /* Optional: limit the maximum width of the grid */
-  justify-items: center; /* Center the grid items */
-  padding: 0 20px; /* Add padding to the sides */
+  gap: 20px; /* רווח בין הפוסטים */
+  width: 100%;
+  max-width: 1400px;
+  justify-items: center;
+  padding: 20px;
+  margin: 0 auto; /* מבטיח שהגריד יהיה ממורכז */
+  box-sizing: border-box;
 }
 
-/* each post in the grid */
+/* כל פוסט ברשת */
 .post {
+  font-family: var(--FONT_MAIN);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: white;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center children horizontally */
-  text-align: center; /* Center-align text inside the post */
-  padding: 20px; /* Optional: padding inside each post */
-  border: 1px solid #ddd; /* Optional: border around each post */
+  align-items: center; /* מרכז את התוכן בתוך הפוסט */
+  text-align: center; /* מרכז טקסטים בתוך הפוסט */
+  padding: 20px; /* ריווח פנימי בתוך כל פוסט */
+  border: 1px solid #ddd; /* גבול מסביב לכל פוסט */
   height: 400px;
-  width: 350px; /* Fixed width to ensure proper centering */
-  margin: 10px; /* Margin to create space around posts */
+  width: 100%; /* אפשר לפוסט להשתמש בכל הרוחב המוקצה */
+  max-width: 350px; /* רוחב מקסימלי לפוסט */
   border-radius: 8px;
 }
 
@@ -96,15 +101,18 @@ body {
   height: 150px;
   border-radius: 50%;
   margin-bottom: 10px;
-  object-fit: cover; /* Ensure the images maintain their aspect ratio */
+  object-fit: cover; /* שמירה על פרופורציות התמונה */
 }
 
 .post h2 {
+  font-weight: bold;
+  font-family: var(--FONT_MAIN);
   font-size: 20px;
   margin: 10px 0;
 }
 
 .post p {
+  font-family: var(--FONT_MAIN);
   margin: 5px 0;
   font-size: 18px;
 }
@@ -114,6 +122,7 @@ button,
 .new-post-form .post-button,
 .new-post-form .close-button,
 .more-info {
+  font-family: var(--FONT_MAIN);
   display: block;
   padding: 10px 20px;
   background-color: var(--BUTTON_COLOR_H1);
@@ -128,13 +137,14 @@ button,
 button:hover,
 .new-post-form .post-button:hover,
 .more-info:hover {
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow effect */
+  font-weight: bold;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* אפקט הצללה חזק יותר */
 }
 
 .exit-filters:hover,
 .new-post-form .close-button:hover {
-  background: none; /* Remove background on hover */
-  box-shadow: none; /* Remove shadow on hover */
+  background: none; /* הסרת רקע בריחוף */
+  box-shadow: none; /* הסרת הצללה בריחוף */
 }
 
 .filter-overlay,
@@ -153,6 +163,7 @@ button:hover,
 
 .filter-container,
 .add-post-form {
+  font-family: var(--FONT_MAIN);
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -173,6 +184,7 @@ button:hover,
 }
 
 .filter-options label {
+  font-family: var(--FONT_MAIN);
   width: 100%; /* Full width for labels */
   text-align: center; /* Center align text */
   margin-bottom: 5px;
@@ -182,6 +194,7 @@ button:hover,
 
 .filter-options input,
 .filter-options select {
+  font-family: var(--FONT_MAIN);
   width: 100%; /* Full width for inputs and selects */
   padding: 4px;
   border: 1px solid #ccc;
@@ -198,6 +211,7 @@ button:hover,
 
 .apply-button,
 .clear-button {
+  font-family: var(--FONT_MAIN);
   flex: 1;
   font-size: 14px;
   padding: 10px;
@@ -227,6 +241,7 @@ button:hover,
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
 }
 .exit-filters {
+  font-family: var(--FONT_MAIN);
   position: absolute;
   top: 10px;
   right: 10px;
@@ -240,6 +255,7 @@ button:hover,
 }
 
 .new-post-form {
+  font-family: var(--FONT_MAIN);
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -251,6 +267,7 @@ button:hover,
 }
 
 .new-post-form label {
+  font-family: var(--FONT_MAIN);
   display: block;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -258,6 +275,7 @@ button:hover,
 }
 
 .new-post-form input {
+  font-family: var(--FONT_MAIN);
   width: calc(100% - 16px);
   padding: 8px;
   margin-top: 5px;
@@ -266,6 +284,7 @@ button:hover,
 }
 
 .new-post-form .post-button {
+  font-family: var(--FONT_MAIN);
   display: block;
   margin: 20px auto 0;
   padding: 10px 20px;
@@ -282,19 +301,21 @@ button:hover,
 }
 
 .new-post-form .close-button {
+  font-family: var(--FONT_MAIN);
   position: absolute;
   top: 10px;
   right: 10px;
-  padding: 5px; /* Make the button smaller */
-  color: black; /* Change color to black */
+  padding: 5px; /* הקטן את הכפתור */
+  color: black; /* שנה את הצבע לשחור */
   border: none;
-  background: none; /* Remove background */
+  background: none; /* הסר את הרקע */
   cursor: pointer;
-  font-size: 20px; /* Increase font size */
-  width: auto; /* Ensure button is not stretched */
+  font-size: 20px; /* הגדל את גודל הפונט */
+  width: auto; /* ודא שהכפתור אינו נמתח */
 }
 
 .more-info {
+  font-family: var(--FONT_MAIN);
   margin-top: auto;
   padding: 7px 15px;
   background-color: var(--BUTTON_COLOR_H1);
@@ -307,10 +328,11 @@ button:hover,
 }
 
 .more-info:hover {
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow effect */
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* אפקט הצללה חזק יותר */
 }
 
 .delete-post {
+  font-family: var(--FONT_MAIN);
   position: absolute;
   top: 7px;
   right: 7px;
@@ -330,15 +352,18 @@ button:hover,
 }
 
 .add-post-container {
+  font-family: var(--FONT_MAIN);
   max-width: 300px;
   padding: 10px;
 }
 
 .add-post-container label {
+  font-family: var(--FONT_MAIN);
   font-weight: bold;
 }
 
 .add-post-container input[type="date"] {
+  font-family: var(--FONT_MAIN);
   width: 100%;
   margin-bottom: 10px;
   box-sizing: border-box;

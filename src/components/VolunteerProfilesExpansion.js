@@ -13,7 +13,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Ensure this impo
 const GlobalStyle = createGlobalStyle`
   :root {
     --TITLE_FONT: 'Source Serif Pro', serif;
-    --TEXT_FONT: Arial, sans-serif;
+    --TEXT_FONT: 'Quicksand', sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;
@@ -83,7 +83,7 @@ const BasicInfo = styled.div`
 `;
 
 const VolunteerName = styled.h2`
-  font-family: arial;
+  font-family: 'Quicksand', sans-serif;
   font-size: 4rem; 
   margin: 5px 0;
   color: #555;
@@ -97,7 +97,7 @@ const SubTitle = styled.h2`
 `;
 
 const Text = styled.p`
-  font-family: var(--TEXT_FONT);
+  font-family: 'Quicksand', sans-serif;
   font-size: 1.2rem;
   margin: 5px 0;
   color: var(--TEXT_COLOR_H1);
@@ -123,6 +123,13 @@ const DetailRow = styled.div`
 const DetailLabel = styled.label`
   font-weight: bold;
   color: #333;
+`;
+
+const InnerText = styled.p`
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1 rem;
+  margin: 5px 0;
+  color: var(--TEXT_COLOR_H1);
 `;
 
 const DetailValue = styled.span`
@@ -296,8 +303,7 @@ const VolProfile = () => {
             {Array.isArray(profile.reviews) && profile.reviews.map((review, index) => (
               <ReviewCard key={index}>
                 <DetailLabel><strong>{review.reviewerName}:</strong></DetailLabel>
-                <DetailValue>{review.date}, {review.location}</DetailValue>
-                <Text>{review.text}</Text>
+                <InnerText>{review.text}</InnerText>
               </ReviewCard>
             ))}
           </ReviewsContainer>

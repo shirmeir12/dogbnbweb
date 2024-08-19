@@ -17,8 +17,8 @@ import galleryImage6 from '../images/dog6.jpg';
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --TITLE_FONT: 'Arial', sans-serif;
-    --TEXT_FONT: Arial, sans-serif;
+    --TITLE_FONT: 'Quicksand', sans-serif;
+    --TEXT_FONT: 'Quicksand', sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;

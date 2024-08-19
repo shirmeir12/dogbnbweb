@@ -12,7 +12,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 const GlobalStyle = createGlobalStyle`
   :root {
     --TITLE_FONT: 'Source Serif Pro', serif;
-    --TEXT_FONT: Arial, sans-serif;
+    --TEXT_FONT: 'Quicksand', sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;
@@ -108,7 +108,7 @@ const BasicInfo = styled.div`
 `;
 
 const VolunteerName = styled.h2`
-  font-family: arial;
+  font-family: 'Quicksand', sans-serif;
   font-size: 4rem;
   margin: 5px 0;
   color: #555;
@@ -122,7 +122,7 @@ const SubTitle = styled.h2`
 `;
 
 const Text = styled.p`
-  font-family: var(--TEXT_FONT);
+  font-family: 'Quicksand', sans-serif;
   font-size: 1.2rem;
   margin: 5px 0;
   color: var(--TEXT_COLOR_H1);
@@ -161,6 +161,7 @@ const DetailValue = styled.span`
 `;
 
 const EditButton = styled.button`
+  font-family: 'Quicksand', sans-serif;
   background-color: #628991;
   color: #ffffff;
   border: none;
@@ -235,6 +236,7 @@ const ActionButtons = styled.div`
 
 const Button = styled.button`
   background-color: ${props => props.primary ? '#4C7572' : '#B05D5D'};
+  font-family: 'Quicksand', sans-serif;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -678,7 +680,6 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                   value={formData.dogDetails}
                   onChange={handleChange}
                   rows="4"
-                  style={{ width: '100%' }}
                 />
               </>
             ) : (
@@ -697,7 +698,6 @@ const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
                   value={formData.careInstructions}
                   onChange={handleChange}
                   rows="4"
-                  style={{ width: '100%' }}
                 />
               </>
             ) : (

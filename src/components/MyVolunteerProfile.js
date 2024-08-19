@@ -13,7 +13,7 @@ import { DB } from './Config';
 const GlobalStyle = createGlobalStyle`
   :root {
     --TITLE_FONT: 'Source Serif Pro', serif;
-    --TEXT_FONT: Arial, sans-serif;
+    --TEXT_FONT: 'Quicksand', sans-serif;
     --TITLE_COLOR_H1: #4C7572;
     --BACKGROUND_COLOR: #F0EDEB;
     --TEXT_COLOR_H1: #46454A;
@@ -108,7 +108,7 @@ const BasicInfo = styled.div`
 `;
 
 const VolunteerName = styled.h2`
-  font-family: arial;
+  font-family: 'Quicksand', sans-serif;
   font-size: 3rem;
   margin: 5px 0;
   color: #555;
@@ -122,8 +122,15 @@ const SubTitle = styled.h2`
 `;
 
 const Text = styled.p`
-  font-family: var(--TEXT_FONT);
+  font-family: 'Quicksand', sans-serif;
   font-size: 1.2rem;
+  margin: 5px 0;
+  color: var(--TEXT_COLOR_H1);
+`;
+
+const InnerText = styled.p`
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1 rem;
   margin: 5px 0;
   color: var(--TEXT_COLOR_H1);
 `;
@@ -157,6 +164,7 @@ const DetailValue = styled.span`
 `;
 
 const EditButton = styled.button`
+  font-family: 'Quicksand', sans-serif;
   background-color: #628991;
   color: #ffffff;
   border: none;
@@ -205,6 +213,7 @@ const ReviewCard = styled.div`
   margin-bottom: 10px;
   border-radius: 5px;
   width: 100%;
+  background-color: #EFEFEF;
 `;
 
 const RequestItem = styled.div`
@@ -479,7 +488,7 @@ const AboutMe = ({ profile, isEditing, formData, handleChange }) => (
         rows="4"
       />
     ) : (
-      <Text>{profile.description}</Text>
+      <DetailValue>{profile.description}</DetailValue>
     )}
   </Card>
 );
@@ -497,12 +506,11 @@ const Reviews = ({ reviews }) => (
         reviews.map((review, index) => (
           <ReviewCard key={index}>
             <DetailLabel><strong>{review.reviewerName}:</strong></DetailLabel>
-            <DetailValue>{review.date}, {review.location}</DetailValue>
-            <Text>{review.text}</Text>
+            <InnerText>{review.text}</InnerText>
           </ReviewCard>
         ))
       ) : (
-        <Text>No reviews available</Text>
+        <DetailValue>No reviews available</DetailValue>
       )}
     </ReviewsContainer>
   </Card>
