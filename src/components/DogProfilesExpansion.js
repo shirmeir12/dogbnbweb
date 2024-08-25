@@ -10,6 +10,7 @@ import pawPrint from '../images/pawprint5.svg';
 import { getAuth } from 'firebase/auth'; // Ensure this import is present
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
+
 const GlobalStyle = createGlobalStyle`
   :root {
     --TITLE_FONT: 'Source Serif Pro', serif;
@@ -400,6 +401,7 @@ const DogProfiles = () => {
   };
   
   
+  
   {showMessage && (
     <PopupContainer>
       <PopupMessage>
@@ -422,7 +424,10 @@ const DogProfiles = () => {
           <div>
             <BoldTextInline>Dates for BBsitting:</BoldTextInline> {profile.datesForBBsitting}
           </div>
+          {profile.registrationType !== 'reserve' && (
           <ContactButton onClick={handleContactClick}>Connect</ContactButton>
+        )}
+          
         </BasicInfo>
 
         <ProfileImage src={profile.profilePic || dog1} alt={`${profile.name}`} />
