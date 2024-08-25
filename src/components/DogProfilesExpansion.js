@@ -424,9 +424,8 @@ const DogProfiles = () => {
           <div>
             <BoldTextInline>Dates for BBsitting:</BoldTextInline> {profile.datesForBBsitting}
           </div>
-          {profile.registrationType !== 'reserve' && (
           <ContactButton onClick={handleContactClick}>Connect</ContactButton>
-        )}
+        
           
         </BasicInfo>
 
