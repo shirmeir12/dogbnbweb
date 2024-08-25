@@ -48,7 +48,9 @@ const NavbarLink = styled(Link)`
 
 const LogoutButton = styled.button`
   ${linkStyles}
+  color: #605F85;
 `;
+
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);

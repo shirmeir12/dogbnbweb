@@ -304,13 +304,43 @@ const CloseButton = styled.button`
   }
 `;
 
-const RequestDOS = ({ requests }) => {
+const Button = styled.button`
+  background-color: ${props => props.primary ? '#4C7572' : '#B05D5D'};
+  font-family: 'Quicksand', sans-serif;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  min-width: 25px; /* מגדיר רוחב מינימלי אחיד לכפתורים */
+  height: 25px; /* מגדיר גובה אחיד לכפתור המחק */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px; /* מוסיף מרווח מימין לכפתור */
+
+  &:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.primary ? '#4C7572' : '#A04B4B'};
+  }
+`;
+
+const RequestDOS = ({ requests, setApprovedRequests }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (id) => {
     navigate(`/dog-profile/${id}`);
   };
 
+  const onDelete = (index) => {
+    const updatedRequests = requests.filter((_, i) => i !== index);
+    setApprovedRequests(updatedRequests); // עדכון הרשימה לאחר מחיקה
+  };
+  
   return (
     <Card>
       <TitleSection>
@@ -319,22 +349,31 @@ const RequestDOS = ({ requests }) => {
           <SubTitle>Approved Requests</SubTitle>
         </TitleWithIcon>
       </TitleSection>
-      {requests.map((request, index) => (
-        <RequestItem key={index} onClick={() => handleItemClick(request.uid)}>
-          <Avatar src={request.profilePic || '../images/default-avatar.jpg'} alt={request.name} />
-          <Info>
-            <Name>{request.name}</Name>
-            <Date>{request.date}</Date>
-          </Info>
-          <PhoneButton href={`https://wa.me/${request.mobile}`} target="_blank">
-            <FaWhatsapp />
-          </PhoneButton>
-        </RequestItem>
-      ))}
+      {requests.length === 0 ? (
+        <DetailValue>No approved requests at the moment</DetailValue> // הודעה במקרה שאין בקשות מאושרות
+      ) : (
+        requests.map((request, index) => (
+          <RequestItem key={index} onClick={() => handleItemClick(request.uid)}>
+            <Avatar src={request.profilePic || '../images/default-avatar.jpg'} alt={request.name} />
+            <Info>
+              <Name>{request.name}</Name>
+              <Date>{request.date}</Date>
+            </Info>
+            <PhoneButton href={`https://wa.me/${request.mobile}`} target="_blank">
+              <FaWhatsapp />
+            </PhoneButton>
+            <Button onClick={(e) => {
+                e.stopPropagation(); // למנוע לחיצה על הבקשה כאשר לוחצים על ה-X
+                onDelete(index);
+            }}>X</Button> {/* כפתור מחיקה */}
+          </RequestItem>
+        ))
+      )}
     </Card>
   );
 };
 
+  
 
 const PersonalDetails = ({ profile, isEditing, formData, handleChange }) => (
   <Card>
@@ -517,7 +556,7 @@ const Reviews = ({ reviews }) => (
 );
 
 
-const VolProfileCard = ({ profile, onSave, approvedRequests, user, reviews }) => {
+const VolProfileCard = ({ profile, onSave, approvedRequests, setApprovedRequests, user, reviews }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(profile);
 
@@ -595,7 +634,7 @@ const VolProfileCard = ({ profile, onSave, approvedRequests, user, reviews }) =>
           />
         </ProfileImage>
       </Header>
-      <ProfileSectionWrapper>
+            <ProfileSectionWrapper>
         <Section>
           <PersonalDetails profile={profile} isEditing={isEditing} formData={formData} handleChange={handleChange} />
           <AboutMe profile={profile} isEditing={isEditing} formData={formData} handleChange={handleChange} />
@@ -607,7 +646,7 @@ const VolProfileCard = ({ profile, onSave, approvedRequests, user, reviews }) =>
         </Section>
         <Section>
           <Reviews reviews={reviews} />
-          <RequestDOS requests={approvedRequests} />
+          <RequestDOS requests={approvedRequests} setApprovedRequests={setApprovedRequests} /> {/* העברת setApprovedRequests */}
         </Section>
       </ProfileSectionWrapper>
     </Container>
@@ -694,6 +733,7 @@ const VolProfile = () => {
         profile={user.details}
         onSave={updateUserDetails}
         approvedRequests={approvedRequests}
+        setApprovedRequests={setApprovedRequests}  // העברת הפונקציה כ- prop
         user={user}
         reviews={reviews}
       />

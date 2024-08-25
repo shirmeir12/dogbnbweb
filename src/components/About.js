@@ -249,11 +249,6 @@ const main_about = () => {
           <img src={galleryImage6} alt="Gallery" />
         </GallerySection>
       </Section>
-      <Section bgColor="var(--SECTION_BG_5)">
-        <RatingSection>
-          <CustomRating />
-        </RatingSection>
-      </Section>
     </MainAbout>
   );
 };
