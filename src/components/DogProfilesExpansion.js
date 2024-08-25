@@ -304,6 +304,7 @@ const DogProfiles = () => {
     dogDetails: '',
     careInstructions: ''
   });
+  const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showMessage, setShowMessage] = useState(false); // New state for message
@@ -338,6 +339,18 @@ const DogProfiles = () => {
             ...prevProfile,
             datesForBBsitting: datesForBBsitting.trim()
           }));
+
+
+          const auth = getAuth();
+          const currentUser = auth.currentUser;
+          if (currentUser) {
+            const currentUserDocRef = doc(DB, 'users', currentUser.uid);
+            const currentUserDocSnap = await getDoc(currentUserDocRef);
+            if (currentUserDocSnap.exists()) {
+              setCurrentUserProfile(currentUserDocSnap.data());
+            }
+          }
+
         } else {
           console.log("No such document!");
           setError("No such document!");
@@ -424,8 +437,11 @@ const DogProfiles = () => {
           <div>
             <BoldTextInline>Dates for BBsitting:</BoldTextInline> {profile.datesForBBsitting}
           </div>
-          <ContactButton onClick={handleContactClick}>Connect</ContactButton>
-        
+          {console.log("Current user registration type:", currentUserProfile?.registrationType)}
+          {currentUserProfile && currentUserProfile.registrationType !== 'reserve' && (
+            <ContactButton onClick={handleContactClick}>Connect</ContactButton>
+          )}
+
           
         </BasicInfo>
 
