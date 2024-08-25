@@ -5,7 +5,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { DB } from './Config';
 import dog1 from '../images/dog1.jpg';
-import dog2 from '../images/dog2.jpg';
 import pawPrint from '../images/pawprint5.svg';
 import { getAuth } from 'firebase/auth'; // Ensure this import is present
 import { collection, query, where, getDocs } from 'firebase/firestore';

@@ -8,12 +8,12 @@ import yael from '../images/person2.jpg';
 import trusted from '../images/trusted-community.png';
 import seamless from '../images/seamless-coordination.png';
 import personalized from '../images/personalized-care.png';
-import galleryImage1 from '../images/lucky1.jpg';
+import galleryImage1 from '../images/chayal1.jpeg';
 import galleryImage2 from '../images/lucky2.jpg';
-import galleryImage3 from '../images/lucky3.jpg';
+import galleryImage3 from '../images/chayal2.jpeg';
 import galleryImage4 from '../images/bulu1.jpg';
-import galleryImage5 from '../images/dog5.jpg';
-import galleryImage6 from '../images/dog6.jpg';
+import galleryImage5 from '../images/chayal3.jpeg';
+import galleryImage6 from '../images/chayal4.jpeg';
 
 const GlobalStyle = createGlobalStyle`
   :root {
