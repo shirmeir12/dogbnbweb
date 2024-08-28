@@ -5,7 +5,7 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { UserContext } from '../App';
 import pawPrint from '../images/pawprint5.svg';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {  doc, getDoc} from 'firebase/firestore';
+import {  doc, getDoc, updateDoc, arrayRemove} from 'firebase/firestore';
 import { DB } from './Config';
 
 
@@ -329,16 +329,28 @@ const Button = styled.button`
   }
 `;
 
-const RequestDOS = ({ requests, setApprovedRequests }) => {
+const RequestDOS = ({ requests, setApprovedRequests, userId }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (id) => {
     navigate(`/dog-profile/${id}`);
   };
 
-  const onDelete = (index) => {
-    const updatedRequests = requests.filter((_, i) => i !== index);
-    setApprovedRequests(updatedRequests); // עדכון הרשימה לאחר מחיקה
+  const onDelete = async (index, requestToDelete) => {
+    try {
+      // Update Firebase
+      const userRef = doc(DB, 'users', userId);
+      await updateDoc(userRef, {
+        approvedRequests: arrayRemove(requestToDelete)
+      });
+
+      // Update local state
+      const updatedRequests = requests.filter((_, i) => i !== index);
+      setApprovedRequests(updatedRequests);
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      // Optionally, add user feedback here (e.g., error message)
+    }
   };
   
   return (
@@ -364,7 +376,7 @@ const RequestDOS = ({ requests, setApprovedRequests }) => {
             </PhoneButton>
             <Button onClick={(e) => {
                 e.stopPropagation(); // למנוע לחיצה על הבקשה כאשר לוחצים על ה-X
-                onDelete(index);
+                onDelete(index, request);
             }}>X</Button> {/* כפתור מחיקה */}
           </RequestItem>
         ))
@@ -646,7 +658,7 @@ const VolProfileCard = ({ profile, onSave, approvedRequests, setApprovedRequests
         </Section>
         <Section>
           <Reviews reviews={reviews} />
-          <RequestDOS requests={approvedRequests} setApprovedRequests={setApprovedRequests} /> {/* העברת setApprovedRequests */}
+          <RequestDOS requests={approvedRequests} setApprovedRequests={setApprovedRequests} userId={user.firebaseUser.uid} /> {/* העברת setApprovedRequests */}
         </Section>
       </ProfileSectionWrapper>
     </Container>
